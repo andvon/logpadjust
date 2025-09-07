@@ -9,7 +9,7 @@ logp.adjust(p, method = logp.adjust.methods, n = length(p), base = exp(1))
 \arguments{
 \item{p}{vector of p-values in log space}
 
-\item{method}{correction method to use}
+\item{method}{correction method to use. See: \code{\link{logp.adjust.methods}}}
 
 \item{n}{number of comparisons, must be greater than or equal to length(p).}
 
@@ -19,5 +19,32 @@ logp.adjust(p, method = logp.adjust.methods, n = length(p), base = exp(1))
 vector of adjusted log p-values
 }
 \description{
-Adjust log P-values for Multiple Comparisons
+\code{logp.adjust()} modifies the code from \code{\link[stats]{p.adjust}} to
+operate on log-space p-values. Each method should should generate identical results
+to the original function when converted back to linear.
+}
+\details{
+This was mainly written for cases when one is working with very small p-values (< 1e-300).
+In these cases, the value is rounded to 0. When calculating p-values using a log distribution,
+it is possible to get values that can be lower than this cap. This function should allow users to apply
+multiple test correction methods to these values without losing potentially valuable information.
+}
+\examples{
+# Operate on log p-values --------------
+
+p <- c(0.001, 0.1, NA)
+logp.adjust(p = log(p), method = "bonferroni")
+# Equivalent to
+log(p.adjust(p, method = "bonferroni"))
+
+# Use a different base -----------------
+logp.adjust(p = log(p, base = 2), method = "bonferroni", base = 2)
+
+# Convert back to linear p-values
+exp( logp.adjust(p = log(p), method = "bonferroni") )
+
+
+}
+\seealso{
+\code{\link[stats]{p.adjust}}, \code{\link{logp.adjust.methods}}
 }

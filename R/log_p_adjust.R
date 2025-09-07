@@ -5,7 +5,7 @@
 #'
 #' Character vector of method names accepted by \code{logp.adjust()}.
 #' These are derived from p.adjust.methods and should match unless a new method has been added.
-#' @seealso [p.adjust.methods()]
+#' @seealso [p.adjust.methods]
 #' @format A character vector.
 #' @examples
 #' logp.adjust.methods
@@ -69,6 +69,16 @@ logp.adjust.methods <- c("bonferroni","holm","hommel","hochberg","BH","BY","fdr"
 	pmin(0, cummin(log(n,base) - log(i,base) + p[o]))[ro]
 }
 
+#' Multiple Test Correction: BY
+#'
+#' @param p x
+#' @param n x
+#' @param lp x
+#' @param base x
+#'
+#' @return a vector of adjusted p-values in log space
+#'
+#' @examples
 .log_BY <- function(p, n, lp, base){
 	i <- lp:1L
 	o <- order(p, decreasing = TRUE)
@@ -83,14 +93,47 @@ logp.adjust.methods <- c("bonferroni","holm","hommel","hochberg","BH","BY","fdr"
 
 #' Adjust log P-values for Multiple Comparisons
 #'
+#' \code{logp.adjust()} modifies the code from \code{\link[stats]{p.adjust}} to
+#' operate on log-space p-values. Each method should should generate identical results
+#' to the original function when converted back to linear.
+#'
+#' This was mainly written for cases when one is working with very small p-values (< 1e-300).
+#' In these cases, the value is rounded to 0. When calculating p-values using a log distribution,
+#' it is possible to get values that can be lower than this cap. This function should allow users to apply
+#' multiple test correction methods to these values without losing potentially valuable information.
+#'
+#' @section Relationship to p.adjust
+#' The original code from \code{\link[stats]{p.adjust}} was used as a starting point and thus borrows heavily from the theory
+#' and efforts put into that codebase. Please keep this in mind and cite the original authors!
+#'
+#' The primary difference is that methods were extracted into their own helper functions for easier interpretation.
+#'
+#' These methods exist as internal helpers in the form of \code{.log_*}.
+#' Within these helpers, the original method was updated to accept log values and perform the calculation in log space.
+#'
 #' @param p vector of p-values in log space
-#' @param method correction method to use
+#' @param method correction method to use. See: \code{\link{logp.adjust.methods}}
 #' @param n number of comparisons, must be greater than or equal to length(p).
 #' @param base the log base to perform operations in. Should match the base of the p-values. defaults to natural log.
-#'
+#' @seealso \code{\link[stats]{p.adjust}}, \code{\link{logp.adjust.methods}}
 #' @importFrom stats setNames
 #' @return vector of adjusted log p-values
 #' @export
+#'
+#' @examples
+#' # Operate on log p-values --------------
+#'
+#' p <- c(0.001, 0.1, NA)
+#' logp.adjust(p = log(p), method = "bonferroni")
+#' # Equivalent to
+#' log(p.adjust(p, method = "bonferroni"))
+#'
+#' # Use a different base -----------------
+#' logp.adjust(p = log(p, base = 2), method = "bonferroni", base = 2)
+#'
+#' # Convert back to linear p-values
+#' exp( logp.adjust(p = log(p), method = "bonferroni") )
+#'
 #'
 logp.adjust <-
 	function (p, method = logp.adjust.methods, n = length(p), base = exp(1)){

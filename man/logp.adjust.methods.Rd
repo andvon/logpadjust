@@ -18,6 +18,6 @@ These are derived from p.adjust.methods and should match unless a new method has
 logp.adjust.methods
 }
 \seealso{
-\code{\link[=p.adjust.methods]{p.adjust.methods()}}
+\link{p.adjust.methods}
 }
 \keyword{datasets}
