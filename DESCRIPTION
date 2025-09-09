@@ -1,20 +1,27 @@
 Package: logpadjust
-Title: Calculate adjusted p-values from log inputs  
-Version: 0.0.0.9000
+Title: Calculate Adjusted P-Values from Log Inputs
+Version: 1.0.0
 Authors@R:
     person(
-        "Andrew", "VonHandorf",
-        email = "example@gmail.com",
+        "Andrew","VonHandorf",
+        email = "logpadjust.stardust156@passmail.net",
         role = c("aut", "cre"),
         comment = c(ORCID = "0000-0003-2495-2324")
     )
-Description: `logpadjust` adapts the original p.adjust function to work on log p-values. This is primarily meant for cases when p-values may be lower than 1e-300. 
+Description: Provides log-space equivalents of 'stats::p.adjust' methods so
+    that multiple testing adjustments can be computed directly on log
+    p-values. This is useful when p-values may be extremely small (e.g.,
+    < 1e-300) and underflow to zero on the linear scale.
 License: MIT + file LICENSE
+URL: https://github.com/andvon/logpadjust
+BugReports: https://github.com/andvon/logpadjust/issues
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
+Language: en-US
 Imports:
     stats
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+NeedsCompilation: no
