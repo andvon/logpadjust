@@ -60,6 +60,20 @@ testthat::test_that(
 	}
 )
 
+# ---- helpers
+
+testthat::test_that(
+	".log_factory creates proper log() calls",
+	{
+		bases <- c(exp(1),2:10)
+		for(base in bases){
+			testthat::expect_equal(
+				.log_factory(base)(10),
+				log(10, base)
+			)
+		}
+	}
+)
 
 
 

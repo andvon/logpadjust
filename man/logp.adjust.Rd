@@ -28,6 +28,12 @@ This was mainly written for cases when one is working with very small p-values (
 In these cases, the value is rounded to 0. When calculating p-values using a log distribution,
 it is possible to get values that can be lower than this cap. This function should allow users to apply
 multiple test correction methods to these values without losing potentially valuable information.
+
+The original code from \code{\link[stats]{p.adjust}} was used as a starting point and thus borrows heavily from the theory
+and efforts put into that codebase. Please keep this in mind and cite the original authors!
+The primary difference is that methods were extracted into their own helper functions for easier interpretation.
+
+For the methods themselves, please see the documentation for the helper functions.
 }
 \examples{
 # Operate on log p-values --------------
@@ -44,6 +50,27 @@ logp.adjust(p = log(p, base = 2), method = "bonferroni", base = 2)
 exp( logp.adjust(p = log(p), method = "bonferroni") )
 
 
+}
+\references{
+The references here are taken from \code{\link[stats]{p.adjust}}.
+
+Benjamini, Y., and Hochberg, Y. (1995).Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society Series B, 57, 289–300.
+\doi{10.1111/j.2517-6161.1995.tb02031.x}
+
+Benjamini, Y., and Yekutieli, D. (2001). The control of the false discovery rate in multiple testing under dependency. Annals of Statistics, 29, 1165–1188.
+\doi{10.1214/aos/1013699998}
+
+Holm, S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6, 65–70.
+\url{https://www.jstor.org/stable/4615733}
+
+Hommel, G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383–386.
+\doi{10.2307/2336190}
+
+Hochberg, Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800–803.
+\doi{10.2307/2336325}
+
+R Core Team (2023). \emph{R: A Language and Environment for Statistical Computing}. R Foundation for Statistical Computing, Vienna, Austria.
+\url{https://www.R-project.org/}
 }
 \seealso{
 \code{\link[stats]{p.adjust}}, \code{\link{logp.adjust.methods}}
