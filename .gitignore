@@ -3,3 +3,8 @@
 .Rdata
 .httr-oauth
 .DS_Store
+# pixi environments
+.pixi
+pixi.toml
+pixi.lock
+..Rcheck
