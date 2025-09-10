@@ -2,12 +2,8 @@ Package: logpadjust
 Title: Calculate Adjusted P-Values from Log Inputs
 Version: 1.0.0
 Authors@R:
-    person(
-        "Andrew","VonHandorf",
-        email = "logpadjust.stardust156@passmail.net",
-        role = c("aut", "cre"),
-        comment = c(ORCID = "0000-0003-2495-2324")
-    )
+    person("Andrew", "VonHandorf", , "logpadjust.stardust156@passmail.net", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0003-2495-2324"))
 Description: Provides log-space equivalents of 'stats::p.adjust' methods so
     that multiple testing adjustments can be computed directly on log
     p-values. This is useful when p-values may be extremely small (e.g.,
@@ -23,5 +19,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 NeedsCompilation: no
